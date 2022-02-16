@@ -1,0 +1,58 @@
+{
+  "name": "doctt",
+  "version": "0.0.7",
+  "description": "live server for markdwon file",
+  "main": "index.js",
+  "bin": {
+    "doctt": "bin/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "nodemon bin/index.js start docs -p 3004",
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onfuns/doctt.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onfuns/doctt/issues"
+  },
+  "homepage": "https://github.com/onfuns/doctt#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cheerio": "^1.0.0-rc.10",
+    "chokidar": "^3.5.3",
+    "commander": "^8.3.0",
+    "dom7": "^4.0.4",
+    "express": "^4.17.2",
+    "fs-extra": "^10.0.0",
+    "highlight.js": "^11.4.0",
+    "markdown-it": "^12.3.2",
+    "markdown-it-anchor": "^8.4.1",
+    "reload": "^3.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-less": "^5.0.0",
+    "gulp-terser": "^2.1.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.1.7",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
