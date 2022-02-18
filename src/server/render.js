@@ -3,7 +3,6 @@ import markdownItAnchor from 'markdown-it-anchor'
 import hljs from 'highlight.js'
 import { join, isAbsolute, extname, normalize, dirname } from 'path'
 import { readFileSync, existsSync } from 'fs-extra'
-import { parseHtml } from './utils'
 
 class Render {
   constructor() {
@@ -61,8 +60,7 @@ class Render {
         }
       },
     })
-    const mdHtml = md.use(markdownItAnchor).render(content)
-    return parseHtml(mdHtml)
+    return md.use(markdownItAnchor).render(content)
   }
 }
 

@@ -10,21 +10,21 @@ h6 {
   margin-top: 35px;
   margin-bottom: 10px;
   padding-bottom: 0;
-  span {
-    font-size: inherit;
-  }
 }
 h1 {
   font-size: 30px;
   margin-bottom: 5px;
+  text-align: center;
+  border-bottom: 2px solid @theme-color;
 }
 h2 {
   font-size: 24px;
+  border-left: 4px solid @theme-color;
+  color: @theme-color;
+  padding-left: 10px;
 }
 
-h1,
 h2 {
-  border-bottom: 2px solid @theme-color;
   & > span {
     display: inline-block;
     background: @theme-color;
@@ -151,7 +151,7 @@ blockquote {
   color: #666;
   padding: 1px 23px;
   margin: 22px 0;
-  border-left: 4px solid @theme-color;
+  border-left: 3px solid #ddd;
   background-color: #f8f8f8;
   &::after {
     display: block;
