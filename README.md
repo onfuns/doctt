@@ -1,6 +1,13 @@
 ## doctt
 
-服务端渲染`markdown`内容的工具，demo 地址：[https://book.coderfuns.com/](https://book.coderfuns.com/)
+即时渲染`markdown`内容的工具，demo 地址：[https://book.onfuns.com/](https://book.onfuns.com/)
+
+## 开发
+
+```bash
+npm run gulp
+npm run dev
+```
 
 ## 使用
 

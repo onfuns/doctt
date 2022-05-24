@@ -1,30 +1,18 @@
 import markdownIt from 'markdown-it'
 import markdownItAnchor from 'markdown-it-anchor'
 import hljs from 'highlight.js'
-import { join, isAbsolute, extname, normalize, dirname } from 'path'
-import { readFileSync, existsSync } from 'fs-extra'
+import { extname, normalize, isAbsolute, join } from 'path'
 
 class Render {
-  constructor() {
-    this.baseDir = process.env.DOCTT_BASE_DIR
+  constructor() {}
+
+  async readFile(filePath) {
+    const res = await fetch(filePath)
+    return await res.text()
   }
 
-  readFile(filePath) {
-    const file = join(this.baseDir, filePath)
-    if (!existsSync(file)) return ''
-    return readFileSync(file, { encoding: 'utf-8' })
-  }
-
-  originFile(filePath) {
-    return `${decodeURIComponent(filePath)}.md`
-  }
-
-  renderSide(file) {
-    let sidebar = this.readFile('_sidebar.md')
-    const dir = dirname(this.originFile(file))
-    //如果子目录有菜单
-    const sideContent = this.readFile(`${dir}/_sidebar.md`)
-    if (sideContent) sidebar = sideContent
+  async renderSide(file) {
+    const sidebar = await this.readFile('_sidebar.md')
     const md = markdownIt({ html: true })
     const defaultRender =
       md.renderer.rules.link_open ||
@@ -36,17 +24,21 @@ class Render {
       if (!/^https?/.test(href)) {
         href = normalize(href).replace(extname(href), '')
         if (!href.startsWith('/')) href = '/' + href
-        tokens[idx].attrSet('href', href)
+        tokens[idx].attrSet('href', `/#${href}`)
       }
       return defaultRender(tokens, idx, options, env, self)
     }
     return md.render(sidebar)
   }
 
-  renderContent(file) {
-    if (file === '/') file = 'README'
-    const content = this.readFile(this.originFile(file))
-    if (!content) return ''
+  async renderContent(file) {
+    if (!file) {
+      file = 'README.md'
+    } else {
+      file = decodeURIComponent(file)
+      if (!extname(file)) file += '.md'
+    }
+    const content = await this.readFile(file)
     const md = markdownIt({
       html: true,
       highlight: function (str, lang) {
@@ -55,13 +47,24 @@ class Render {
             return hljs.highlight(str, { language: lang }).value
           } catch (error) {
             console.log(error)
-            return ''
           }
         }
       },
     })
+    const defaultRender =
+      md.renderer.rules.image ||
+      function (tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options)
+      }
+    md.renderer.rules.image = function (tokens, idx, options, env, self) {
+      const src = tokens[idx].attrGet('src')
+      if (!isAbsolute(src)) {
+        tokens[idx].attrSet('src', join(location.hash.slice(1), '..', src))
+      }
+      return defaultRender(tokens, idx, options, env, self)
+    }
     return md.use(markdownItAnchor).render(content)
   }
 }
 
-export default Render
+export default new Render()

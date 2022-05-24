@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/onfuns/doctt#readme",
   "dependencies": {
+    "@babel/runtime": "^7.18.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",
     "chokidar": "^3.5.3",
@@ -35,10 +36,12 @@
     "highlight.js": "^11.4.0",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
+    "path-browserify": "^1.0.1",
     "reload": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
+    "@babel/plugin-transform-runtime": "^7.18.0",
     "@babel/preset-env": "^7.16.11",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
