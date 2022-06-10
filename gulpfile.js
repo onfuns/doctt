@@ -12,25 +12,23 @@ const buildLess = () => {
 }
 
 const buildClient = () => {
-  return (
-    browserify({
-      entries: 'src/client/index.js',
-      debug: false,
+  return browserify({
+    entries: 'src/client/index.js',
+    debug: false,
+  })
+    .transform('babelify', {
+      presets: ['@babel/preset-env'],
+      plugins: [['@babel/transform-runtime']],
+      sourceMaps: false,
     })
-      .transform('babelify', {
-        presets: ['@babel/preset-env'],
-        plugins: [['@babel/transform-runtime']],
-        sourceMaps: false,
-      })
-      .bundle()
-      .on('error', function (error) {
-        console.log(error.toString())
-      })
-      .pipe(stream('doctt.min.js'))
-      .pipe(buffer())
-      // .pipe(terser())
-      .pipe(dest('dist/static', { overwrite: true }))
-  )
+    .bundle()
+    .on('error', function (error) {
+      console.log(error.toString())
+    })
+    .pipe(stream('doctt.min.js'))
+    .pipe(buffer())
+    .pipe(terser())
+    .pipe(dest('dist/static', { overwrite: true }))
 }
 
 const buildServer = () => {
